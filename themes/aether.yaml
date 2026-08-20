@@ -1,10 +1,13 @@
-visionos:
+Aether:
+  # Merged from upstream's "visionos" and "Liquid Glass". Liquid Glass is the
+  # base (its card-mod is a superset); the mode colours come from visionOS
+  # because they are neutral instead of purple-tinted.
   modes:
     light:
       primary-background-color: rgb(84, 80, 76)
       secondary-background-color: rgb(84, 80, 76)
       app-header-background-color: rgba(84, 80, 76, 0.3)
-      ha-card-background: rgba(128, 128, 128, 0.3)
+      ha-card-background: rgba(150, 150, 150, 0.3)
       app-theme-color: rgb(122, 114, 106) # Average header color, used on the top of the browser
     dark:
       primary-background-color: rgb(25, 24, 22)
@@ -20,7 +23,7 @@ visionos:
   accent-color: var(--primary-color)
   # Text
   primary-text-color: rgba(255, 255, 255, 0.96)
-  secondary-text-color: "#d3d3d3"
+  secondary-text-color: rgba(222, 222, 222, 0.96)
   ha-color-text-secondary: var(--secondary-text-color)
   text-primary-color: var(--primary-text-color)
   disabled-text-color: rgba(208, 208, 208, 0.5) # XXX: https://github.com/basnijholt/lovelace-ios-dark-mode-theme/issues/2
@@ -54,12 +57,14 @@ visionos:
   # Cards
   card-background-color: var(--secondary-background-color) # Data table background
   paper-listbox-background-color: var(--primary-background-color)
-  ha-card-border-radius: 20px
+  ha-card-border-radius: 34px
+  ha-card-features-border-radius: var(--ha-card-border-radius)
   paper-card-background-color: var(--ha-card-background)
   rgb-card-background-color: rgb(10, 10, 10) # see https://github.com/basnijholt/lovelace-ios-themes/issues/60
   ha-card-border-width: 0 # https://github.com/basnijholt/lovelace-ios-dark-mode-theme/issues/82#event-7732695357
-  ha-card-backdrop-filter: blur(20px)
-  ha-card-box-shadow: 0.5px 0.5px 1px 0px rgba(255, 255, 255, 0.40) inset, -0.5px -0.5px 1px 0px rgba(255, 255, 255, 0.10) inset, 0px 1px 2px 0px rgba(0, 0, 0, 0.10)
+  ha-card-backdrop-filter: blur(8px)
+  ha-card-box-shadow: >
+    3px 3px 0.5px -3.5px rgba(255, 255, 255, 0.30) inset, -2px -2px 0.5px -2px rgba(255, 255, 255, 0.30) inset, 0 0 8px 1px rgba(255, 255, 255, 0.10) inset, 0 0 2px 0 rgba(0, 0, 0, 0.10)
   # Toggles
   paper-toggle-button-checked-button-color: "#484848"
   paper-toggle-button-checked-bar-color: "#484848"
@@ -135,8 +140,8 @@ visionos:
   md-list-container-color: none # ha-md-list already has a card background
   # Dropdown
   wa-shadow-m: var(--ha-card-box-shadow)
-  wa-border-radius-s: 16px
-  wa-border-radius-m: var(--ha-card-border-radius)
+  wa-border-radius-s: var(--ha-card-border-radius)
+  wa-border-radius-m: 24px
   wa-border-width-s: 0px
   ha-color-on-neutral-normal: var(--primary-text-color) # icon color
   wa-color-neutral-fill-normal: "#FFFFFF14" # hover color
@@ -146,7 +151,7 @@ visionos:
   ha-color-fill-primary-quiet-resting: rgba(255, 255, 255, 0.12) # selection color
   ha-color-fill-primary-quiet-hover: rgba(255, 255, 255, 0.2) # selection hover color
 
-  card-mod-theme: "visionos"
+  card-mod-theme: "Aether"
   card-mod-drawer-yaml: |
     .: |
       .mdc-drawer {
@@ -167,64 +172,103 @@ visionos:
       background: none !important;
       backdrop-filter: var(--ha-card-backdrop-filter);
     }
-  card-mod-card: |
-    ha-card {
-      backdrop-filter: unset !important;
-    }
-    ha-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: transparent;
-      backdrop-filter: var(--ha-card-backdrop-filter);
-      z-index: -1;
-      pointer-events: none;
-      border-radius: inherit;
-      box-shadow: var(--ha-card-box-shadow);
-    }
-    :host(hui-heading-card) ha-card {
-      background: none !important;
-      backdrop-filter: none !important;
-    }
-    :host(hui-heading-card) ha-card::before {
-      content: none !important;
+
+    ha-list-item-button,
+    ha-list-item-button.selected::before {
+      border-radius: var(--ha-card-border-radius) !important;
+      --ha-list-item-focus-radius: var(--ha-card-border-radius) !important;
     }
 
-    /* Energy dashboard */
-    .mdc-data-table,
-    .mdc-data-table__row,
-    .mdc-data-table__header-cell,
-    ha-sankey-chart {
-      background: none !important;
+    ha-md-list-item,
+    ha-md-list-item.selected::before {
+      border-radius: var(--ha-card-border-radius) !important;
     }
+  card-mod-card-yaml: |
+    .: |
+      ha-card {
+        backdrop-filter: unset !important;
+      }
+      ha-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        backdrop-filter: var(--ha-card-backdrop-filter);
+        z-index: -1;
+        pointer-events: none;
+        border-radius: inherit;
+        box-shadow: var(--ha-card-box-shadow);
+      }
+      :host(hui-heading-card) ha-card {
+        background: none !important;
+        backdrop-filter: none !important;
+      }
+      :host(hui-heading-card) ha-card::before {
+        content: none !important;
+      }
 
-    /* Markdown card with text_only */
-    ha-card.text-only {
-      background: none !important;
-      backdrop-filter: none !important;
-      overflow: visible;
-    }
-    ha-card.text-only::before {
-      content: none !important;
-    }
+      /* Energy dashboard */
+      .mdc-data-table,
+      .mdc-data-table__row,
+      .mdc-data-table__header-cell,
+      ha-sankey-chart {
+        background: none !important;
+      }
 
-    /* Mushroom title card */
-    :host(mushroom-title-card) ha-card {
-      background: none !important;
-      backdrop-filter: none !important;
-    }
-    :host(mushroom-title-card) ha-card::before {
-      content: none !important;
-    }
+      /* Markdown card with text_only */
+      ha-card.text-only {
+        background: none !important;
+        backdrop-filter: none !important;
+        overflow: visible;
+      }
+      ha-card.text-only::before {
+        content: none !important;
+      }
 
-    /* Mushroom chips card */
-    :host(mushroom-chips-card) ha-card {
-      background: none !important;
-      backdrop-filter: none !important;
-      box-shadow: none !important;
-    }
-    :host(mushroom-chips-card) ha-card::before {
-      content: none !important;
-      background: none !important;
-      backdrop-filter: none !important;
-    }
+      /* Mushroom title card */
+      :host(mushroom-title-card) ha-card {
+        background: none !important;
+        backdrop-filter: none !important;
+      }
+      :host(mushroom-title-card) ha-card::before {
+        content: none !important;
+      }
+
+      /* Mushroom chips card */
+      :host(mushroom-chips-card) ha-card {
+        background: none !important;
+        backdrop-filter: none !important;
+        box-shadow: none !important;
+      }
+      :host(mushroom-chips-card) ha-card::before {
+        content: none !important;
+        background: none !important;
+        backdrop-filter: none !important;
+      }
+
+    hui-card-features $:
+      hui-card-feature $:
+        hui-target-humidity-card-feature $:
+          ha-control-slider$: |
+            .slider .slider-track-bar {
+              border-radius: 0px !important;
+            }
+        service-call $:
+          custom-feature-slider $: |
+            .default .thumb {
+              border-radius: 0px !important;
+            }
+        hui-cover-position-card-feature $:
+          ha-control-slider$: |
+            .slider .slider-track-bar {
+              border-radius: 0px !important;
+            }
+        hui-cover-tilt-position-card-feature $:
+          ha-control-slider$: |
+            .slider .slider-track-bar {
+              border-radius: 0px !important;
+            }
+        hui-light-brightness-card-feature $:
+          ha-control-slider$: |
+            .slider .slider-track-bar {
+              border-radius: 0px !important;
+            }
