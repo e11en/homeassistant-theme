@@ -1,6 +1,6 @@
 # Aether
 
-A single, flat-background glass theme for Home Assistant, with automatic dark
+A single flat-background glass theme for Home Assistant, with automatic dark
 mode support.
 
 Fork of [Nezz/homeassistant-visionos-theme](https://github.com/Nezz/homeassistant-visionos-theme),
@@ -10,35 +10,29 @@ which is in turn based on [Bas Nijholt's iOS Themes](https://github.com/basnijho
 
 ### One theme instead of two
 
-Upstream ships `visionos` and `Liquid Glass`. They are ~95% identical; the
-differences that mattered:
+Upstream ships two themes in `themes/`: `visionos` and `Liquid Glass`. HACS
+installs a theme repository as a whole, so downloading it gives you both —
+they are not separate installs.
 
-| | visionos | Liquid Glass | Aether |
-|---|---|---|---|
-| dark background | `rgb(25, 24, 22)` neutral | `rgb(18, 11, 25)` purple-tinted | **visionos** |
-| light background | `rgb(84, 80, 76)` | `rgb(76, 80, 84)` | **visionos** |
-| `ha-card-border-radius` | 20px | 34px | **Liquid Glass** |
-| `ha-card-backdrop-filter` | `blur(20px)` | `blur(8px)` | **Liquid Glass** |
-| `ha-card-box-shadow` | hairline inset edges | 3px inset edges + inner glow | **Liquid Glass** |
-| card-mod | `card-mod-card` | `card-mod-card-yaml`, same rules **plus** square slider track bars | **Liquid Glass** |
-| card-mod sidebar | base | base **plus** rounded list items | **Liquid Glass** |
-| `ha-card-features-border-radius` | – | follows card radius | **Liquid Glass** |
+Aether is **`visionos`, renamed**. `Liquid Glass` is gone. The two were ~95%
+identical anyway; where they differed, Liquid Glass was the louder of the pair:
 
-Liquid Glass is a strict superset in everything except colour, so it is the
-base. Its purple-tinted dark mode was the one thing worth swapping out — the
-neutral near-black from visionOS sits better next to a dashboard that is
-already almost black.
-
-The obvious dials, if you want to retune it: `ha-card-border-radius` (34px is
-generous on small tiles), `ha-card-backdrop-filter`, and the mode colours at
-the top of the file.
+| | visionos (= Aether) | Liquid Glass (dropped) |
+|---|---|---|
+| `ha-card-border-radius` | 20px | 34px |
+| `ha-card-backdrop-filter` | `blur(20px)` | `blur(8px)` |
+| `ha-card-box-shadow` | hairline inset edges | 3px inset edges + inner glow |
+| dark background | `rgb(25, 24, 22)` neutral | `rgb(18, 11, 25)` purple-tinted |
+| light background | `rgb(84, 80, 76)` | `rgb(76, 80, 84)` |
+| card-mod | `card-mod-card` | `card-mod-card-yaml`, plus square slider track bars |
+| card-mod sidebar | base | base, plus rounded list items |
 
 ### No background image
 
-Upstream ships a wallpaper per mode (`day.jpg` / `night.jpg`,
-`macOS_26_*.webp`) and points `lovelace-background` at it. Aether drops the
-image *and* the `lovelace-background` variable, so a view falls back to the
-flat `primary-background-color` of its mode.
+Upstream ships a wallpaper per mode (`day.jpg` / `night.jpg`) and points
+`lovelace-background` at it. Aether drops the image *and* the
+`lovelace-background` variable, so a view falls back to the flat
+`primary-background-color` of its mode.
 
 Removing only the image is not enough: Home Assistant renders the view
 background as
@@ -52,8 +46,8 @@ invalid at computed-value time, so the whole declaration is dropped instead of
 falling through to the last fallback. The variable has to go entirely.
 
 Note that the glass effect leans on having something to blur. With a flat
-background the depth comes from the card edges and the inner glow in
-`ha-card-box-shadow`, not from the blur.
+background, `ha-card-backdrop-filter` mostly shows up where cards scroll under
+the header, and the depth comes from the card edges in `ha-card-box-shadow`.
 
 Set a wallpaper per view if you want one back — *edit view → Background
 settings*, or in YAML:
