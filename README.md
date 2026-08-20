@@ -14,8 +14,9 @@ Upstream ships two themes in `themes/`: `visionos` and `Liquid Glass`. HACS
 installs a theme repository as a whole, so downloading it gives you both —
 they are not separate installs.
 
-Aether is **`visionos`, renamed**. `Liquid Glass` is gone. The two were ~95%
-identical anyway; where they differed, Liquid Glass was the louder of the pair:
+Aether started as **`visionos`, renamed** (see *Retuned* below for what has
+changed since). `Liquid Glass` is gone. The two were ~95% identical anyway;
+where they differed, Liquid Glass was the louder of the pair:
 
 | | visionos (= Aether) | Liquid Glass (dropped) |
 |---|---|---|
@@ -26,6 +27,26 @@ identical anyway; where they differed, Liquid Glass was the louder of the pair:
 | light background | `rgb(84, 80, 76)` | `rgb(76, 80, 84)` |
 | card-mod | `card-mod-card` | `card-mod-card-yaml`, plus square slider track bars |
 | card-mod sidebar | base | base, plus rounded list items |
+
+### Retuned
+
+| | upstream visionos | Aether |
+|---|---|---|
+| accent (`primary-color`) | orange `#FF9F0A` | cyan `#38f2e9` |
+| `ha-color-primary-05…95` | orange ramp | cyan ramp |
+| background | `rgb(25,24,22)` dark / `rgb(84,80,76)` light | `#0d0f10`, **both modes** |
+| `ha-card-background` | `rgba(0,0,0,0.3)` — darker than the view | `rgba(255,255,255,0.07)` — lighter |
+
+**Light and dark are identical on purpose.** Upstream's light mode is a warm
+grey that turns brown against these cards, and "Automatic" flips into it during
+the day. This theme is always dark.
+
+**Cards are lighter than the background, not darker.**
+`rgba(255,255,255,0.07)` over `#0d0f10` lands on ~`#1e2021`.
+
+`orange-color`, `yellow-color` and `label-badge-red` are deliberately left
+alone: those are entity state colours, and an active light shouldn't read as
+"accent". Note `label-badge-red` is orange despite its name.
 
 ### No background image
 

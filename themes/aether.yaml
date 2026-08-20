@@ -1,17 +1,24 @@
 Aether:
+  # Light and dark are deliberately identical: this theme is always dark. The
+  # upstream light mode was a warm grey that turned brown against these cards,
+  # and "Automatic" would flip into it during the day.
+  #
+  # Cards are lighter than the background, not darker. rgba(255,255,255,0.07)
+  # over #0d0f10 lands on ~#1e2021 — the card surface of the luxury_dashboard
+  # theme this is meant to sit next to.
   modes:
     light:
-      primary-background-color: rgb(84, 80, 76)
-      secondary-background-color: rgb(84, 80, 76)
-      app-header-background-color: rgba(84, 80, 76, 0.3)
-      ha-card-background: rgba(128, 128, 128, 0.3)
-      app-theme-color: rgb(122, 114, 106) # Average header color, used on the top of the browser
+      primary-background-color: "#0d0f10"
+      secondary-background-color: "#0d0f10"
+      app-header-background-color: rgba(13, 15, 16, 0.3)
+      ha-card-background: rgba(255, 255, 255, 0.07)
+      app-theme-color: "#0d0f10" # Used on the top of the browser
     dark:
-      primary-background-color: rgb(25, 24, 22)
-      secondary-background-color: rgb(25, 24, 22)
-      app-header-background-color: rgba(25, 24, 22, 0.3)
-      ha-card-background: rgba(0, 0, 0, 0.3)
-      app-theme-color: rgb(0, 0, 0)
+      primary-background-color: "#0d0f10"
+      secondary-background-color: "#0d0f10"
+      app-header-background-color: rgba(13, 15, 16, 0.3)
+      ha-card-background: rgba(255, 255, 255, 0.07)
+      app-theme-color: "#0d0f10"
   # Global
   # No lovelace-background on purpose: the view then falls back to
   # primary-background-color, a flat colour per mode. See README.
@@ -94,18 +101,22 @@ Aether:
   yellow-color: "#FFD60A"
   orange-color: "#FF9F0A"
   brown-color: "#AC8E68"
-  primary-color: var(--orange-color)
-  ha-color-primary-05: "#331f00"
-  ha-color-primary-10: "#663d00"
-  ha-color-primary-20: "#995c00"
-  ha-color-primary-30: "#cc7a00"
+  # UI accent: links, active tab underline, radio buttons, checkboxes, sliders.
+  # Upstream used orange here; this is the cyan of the luxury_dashboard theme.
+  # The orange/yellow above are left alone — they are entity state colours, and
+  # an active light should not read as "accent".
+  primary-color: "#38f2e9"
+  ha-color-primary-05: "#0b302f"
+  ha-color-primary-10: "#16615d"
+  ha-color-primary-20: "#22918c"
+  ha-color-primary-30: "#2dc2ba"
   ha-color-primary-40: var(--primary-color)
-  ha-color-primary-50: "#ffa31a"
-  ha-color-primary-60: "#ffad33"
-  ha-color-primary-70: "#ffc266"
-  ha-color-primary-80: "#ffd699"
-  ha-color-primary-90: "#ffebcc"
-  ha-color-primary-95: "#fff5e6"
+  ha-color-primary-50: "#44f3ea"
+  ha-color-primary-60: "#58f4ed"
+  ha-color-primary-70: "#82f7f1"
+  ha-color-primary-80: "#affaf6"
+  ha-color-primary-90: "#d7fcfb"
+  ha-color-primary-95: "#ebfefd"
   # Other
   paper-dialog-background-color: rgba(55, 55, 55, 0.8) # e.g., background of more-info
   paper-item-icon-color: white # also should mini-media-player icon white (but doesn't work by itself)
