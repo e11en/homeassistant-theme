@@ -6,29 +6,39 @@ Aether:
   # was a warm grey that turned brown against these cards, and "Automatic"
   # would flip into it during the day.
   #
-  # Everything here is the dark variant except ha-card-background, which is the
-  # light variant's: cards should sit *lighter* than the view, not darker.
-  # rgba(128,128,128,0.3) over #0d0f10 lands on ~#303132.
+  # Colours follow the luxury_dashboard theme (the "proef" dashboard): a near
+  # black view (#0d0f10) with opaque cards just above it (#1e2022). Cards are
+  # no longer translucent — see "Cards" below.
   primary-background-color: "#0d0f10"
-  secondary-background-color: "#0d0f10"
-  app-header-background-color: rgba(13, 15, 16, 0.3)
-  ha-card-background: rgba(128, 128, 128, 0.3)
+  secondary-background-color: "#1e2022"
+  app-header-background-color: "#0d0f10"
   app-theme-color: "#0d0f10" # Used on the top of the browser
   # Global
   # No lovelace-background on purpose: the view then falls back to
   # primary-background-color.
   light-primary-color: rgb(241, 241, 241) # Icons on sidebar
-  divider-color: rgba(152, 152, 157, 0.3) # from Apple systemGray dark mode
+  divider-color: rgba(255, 255, 255, 0.07)
   accent-color: var(--primary-color)
+  # Font — Poppins is loaded document-wide by /local/luxury-font.js, wired up
+  # through `frontend: extra_module_url:`. An @import here is not enough: it
+  # lands in a shadow root, where @font-face is ignored.
+  primary-font-family: "'Poppins', sans-serif"
+  paper-font-common-base_-_font-family: "'Poppins', sans-serif"
+  paper-font-common-code_-_font-family: "'Poppins', sans-serif"
+  paper-font-body1_-_font-family: "'Poppins', sans-serif"
+  paper-font-subhead_-_font-family: "'Poppins', sans-serif"
+  paper-font-headline_-_font-family: "'Poppins', sans-serif"
+  paper-font-caption_-_font-family: "'Poppins', sans-serif"
+  paper-font-title_-_font-family: "'Poppins', sans-serif"
   # Text
-  primary-text-color: rgba(255, 255, 255, 0.96)
-  secondary-text-color: "#d3d3d3"
+  primary-text-color: "#ffffff"
+  secondary-text-color: "#5b5b5c"
   ha-color-text-secondary: var(--secondary-text-color)
   text-primary-color: var(--primary-text-color)
   disabled-text-color: rgba(208, 208, 208, 0.5) # XXX: https://github.com/basnijholt/lovelace-ios-dark-mode-theme/issues/2
   text-dark-color: var(--primary-text-color)
   # Sidebar Menu
-  sidebar-background-color: var(--secondary-background-color)
+  sidebar-background-color: var(--primary-background-color)
   sidebar-icon-color: var(--light-primary-color)
   sidebar-text-color: var(--light-primary-color)
   sidebar-selected-background-color: var(--primary-background-color)
@@ -53,15 +63,20 @@ Aether:
   label-badge-background-color: "#23232E"
   label-badge-text-color: "#F1F1F1"
   label-badge-red: rgba(255, 159, 9, 0.7) # from Apple systemOrange dark mode
-  # Cards
+  # Cards — opaque, flat, 16px. Matches the luxury_dashboard theme.
+  #
+  # No box-shadow: on a near black background a black drop shadow adds nothing
+  # and only muddies the edges. The depth comes from #0d0f10 → #1e2022.
+  # No backdrop-filter either — there is nothing behind an opaque card to blur.
   card-background-color: var(--secondary-background-color) # Data table background
   paper-listbox-background-color: var(--primary-background-color)
-  ha-card-border-radius: 20px
+  ha-card-background: "#1e2022"
+  ha-card-border-radius: 16px
   paper-card-background-color: var(--ha-card-background)
-  rgb-card-background-color: rgb(10, 10, 10) # see https://github.com/basnijholt/lovelace-ios-themes/issues/60
+  rgb-card-background-color: rgb(30, 32, 34)
   ha-card-border-width: 0 # https://github.com/basnijholt/lovelace-ios-dark-mode-theme/issues/82#event-7732695357
-  ha-card-backdrop-filter: blur(20px)
-  ha-card-box-shadow: 0.5px 0.5px 1px 0px rgba(255, 255, 255, 0.40) inset, -0.5px -0.5px 1px 0px rgba(255, 255, 255, 0.10) inset, 0px 1px 2px 0px rgba(0, 0, 0, 0.10)
+  ha-card-backdrop-filter: none
+  ha-card-box-shadow: none
   # Toggles
   paper-toggle-button-checked-button-color: "#484848"
   paper-toggle-button-checked-bar-color: "#484848"
@@ -76,12 +91,15 @@ Aether:
   switch-unchecked-track-color: var(--disabled-text-color)
   switch-unchecked-button-color: "#FFF"
   # Dialog
-  ha-dialog-surface-backdrop-filter: var(--ha-card-backdrop-filter)
+  ha-dialog-surface-backdrop-filter: none
   dialog-box-shadow: var(--ha-card-box-shadow)
   ha-dialog-surface-background: var(--ha-card-background)
+  ha-dialog-border-radius: 20px
   ha-dialog-scrim-backdrop-filter: none
+  dialog-backdrop-filter: blur(6px)
   # Header
-  app-header-backdrop-filter: var(--ha-card-backdrop-filter)
+  app-header-backdrop-filter: none
+  app-header-text-color: var(--primary-text-color)
   app-header-edit-background-color: rgba(0, 0, 0, 0.2)
   # Colors
   red-color: "#FF453A"
@@ -155,45 +173,33 @@ Aether:
   card-mod-theme: "Aether"
   card-mod-drawer-yaml: |
     .: |
-      .mdc-drawer {
-        background-color: var(--app-header-background-color) !important;
-        backdrop-filter: var(--ha-card-backdrop-filter);
-      }
-
+      .mdc-drawer,
       .sidebar-shell {
-        background-color: var(--app-header-background-color) !important;
+        background-color: var(--primary-background-color) !important;
       }
-      
-    wa-drawer$: |
-      dialog {
-        backdrop-filter: var(--ha-card-backdrop-filter);
-      }
-  card-mod-sidebar: |
-    :host {
-      background: none !important;
-      backdrop-filter: var(--ha-card-backdrop-filter);
-    }
   card-mod-card: |
-    ha-card {
-      backdrop-filter: unset !important;
+    /* Card titles, in the style of the luxury_dashboard headings: small,
+       uppercase, tracked out, grey. Cyan stays reserved for "active". */
+    .card-header {
+      font-family: var(--primary-font-family) !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.12em !important;
+      text-transform: uppercase !important;
+      color: var(--secondary-text-color) !important;
+      padding: 18px 20px 6px !important;
     }
-    ha-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: transparent;
-      backdrop-filter: var(--ha-card-backdrop-filter);
-      z-index: -1;
-      pointer-events: none;
-      border-radius: inherit;
-      box-shadow: var(--ha-card-box-shadow);
-    }
-    :host(hui-heading-card) ha-card {
+
+    /* Cards that should not carry a surface of their own */
+    :host(hui-heading-card) ha-card,
+    ha-card.text-only,
+    :host(mushroom-title-card) ha-card,
+    :host(mushroom-chips-card) ha-card {
       background: none !important;
-      backdrop-filter: none !important;
+      box-shadow: none !important;
     }
-    :host(hui-heading-card) ha-card::before {
-      content: none !important;
+    ha-card.text-only {
+      overflow: visible;
     }
 
     /* Energy dashboard */
@@ -202,35 +208,4 @@ Aether:
     .mdc-data-table__header-cell,
     ha-sankey-chart {
       background: none !important;
-    }
-
-    /* Markdown card with text_only */
-    ha-card.text-only {
-      background: none !important;
-      backdrop-filter: none !important;
-      overflow: visible;
-    }
-    ha-card.text-only::before {
-      content: none !important;
-    }
-
-    /* Mushroom title card */
-    :host(mushroom-title-card) ha-card {
-      background: none !important;
-      backdrop-filter: none !important;
-    }
-    :host(mushroom-title-card) ha-card::before {
-      content: none !important;
-    }
-
-    /* Mushroom chips card */
-    :host(mushroom-chips-card) ha-card {
-      background: none !important;
-      backdrop-filter: none !important;
-      box-shadow: none !important;
-    }
-    :host(mushroom-chips-card) ha-card::before {
-      content: none !important;
-      background: none !important;
-      backdrop-filter: none !important;
     }

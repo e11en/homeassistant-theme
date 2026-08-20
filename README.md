@@ -30,23 +30,42 @@ where they differed, Liquid Glass was the louder of the pair:
 
 ### Retuned
 
+Colours, radius and font follow the `luxury_dashboard` theme, so this sits next
+to that dashboard without a visible seam.
+
 | | upstream visionos | Aether |
 |---|---|---|
 | accent (`primary-color`) | orange `#FF9F0A` | cyan `#38f2e9` |
 | `ha-color-primary-05…95` | orange ramp | cyan ramp |
 | `modes:` | light + dark variants | **none** — one set of values |
 | background | `rgb(25,24,22)` dark / `rgb(84,80,76)` light | `#0d0f10` |
-| `ha-card-background` | `rgba(0,0,0,0.3)` dark — darker than the view | `rgba(128,128,128,0.3)` — lighter |
+| `ha-card-background` | `rgba(0,0,0,0.3)` — translucent | `#1e2022` — **opaque** |
+| `ha-card-border-radius` | 20px | 16px |
+| `ha-card-box-shadow` | hairline inset edges | `none` |
+| `ha-card-backdrop-filter` | `blur(20px)` | `none` |
+| text | `rgba(255,255,255,0.96)` / `#d3d3d3` | `#ffffff` / `#5b5b5c` |
+| font | HA default | Poppins |
 
 **There is no `modes:` block.** This theme is always dark, so it carries one
 set of values rather than a light and a dark variant. Upstream's light mode is
 a warm grey that turns brown against these cards, and "Automatic" flips into it
 during the day.
 
-The surface values are the dark variant's, with one exception:
-`ha-card-background` is the **light** variant's, so cards sit *lighter* than
-the view instead of darker. `rgba(128,128,128,0.3)` over `#0d0f10` lands on
-~`#303132`.
+**Cards are opaque and flat.** No box-shadow: on a near black background a
+black drop shadow adds nothing and only muddies the edges — the depth comes
+from `#0d0f10` → `#1e2022`. No backdrop-filter either; there is nothing behind
+an opaque card to blur. The `ha-card::before` glass layer upstream uses is
+gone, and with it the transparent-sidebar block — so `uix`/card-mod is now only
+needed for the card rules below.
+
+**Card titles** are restyled to match: 13px, uppercase, tracked out, in
+`secondary-text-color`. Cyan stays reserved for "active".
+
+**Poppins** is expected to be loaded document-wide, e.g. via
+`frontend: extra_module_url:` pointing at a small script that injects the
+stylesheet. An `@import` inside the theme is *not* enough — theme CSS lands in
+a shadow root, where `@font-face` is ignored. Without that script the font
+variables simply fall back to sans-serif.
 
 `orange-color`, `yellow-color` and `label-badge-red` are deliberately left
 alone: those are entity state colours, and an active light shouldn't read as
