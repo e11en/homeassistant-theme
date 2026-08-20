@@ -34,15 +34,19 @@ where they differed, Liquid Glass was the louder of the pair:
 |---|---|---|
 | accent (`primary-color`) | orange `#FF9F0A` | cyan `#38f2e9` |
 | `ha-color-primary-05…95` | orange ramp | cyan ramp |
-| background | `rgb(25,24,22)` dark / `rgb(84,80,76)` light | `#0d0f10`, **both modes** |
-| `ha-card-background` | `rgba(0,0,0,0.3)` — darker than the view | `rgba(255,255,255,0.07)` — lighter |
+| `modes:` | light + dark variants | **none** — one set of values |
+| background | `rgb(25,24,22)` dark / `rgb(84,80,76)` light | `#0d0f10` |
+| `ha-card-background` | `rgba(0,0,0,0.3)` dark — darker than the view | `rgba(128,128,128,0.3)` — lighter |
 
-**Light and dark are identical on purpose.** Upstream's light mode is a warm
-grey that turns brown against these cards, and "Automatic" flips into it during
-the day. This theme is always dark.
+**There is no `modes:` block.** This theme is always dark, so it carries one
+set of values rather than a light and a dark variant. Upstream's light mode is
+a warm grey that turns brown against these cards, and "Automatic" flips into it
+during the day.
 
-**Cards are lighter than the background, not darker.**
-`rgba(255,255,255,0.07)` over `#0d0f10` lands on ~`#1e2021`.
+The surface values are the dark variant's, with one exception:
+`ha-card-background` is the **light** variant's, so cards sit *lighter* than
+the view instead of darker. `rgba(128,128,128,0.3)` over `#0d0f10` lands on
+~`#303132`.
 
 `orange-color`, `yellow-color` and `label-badge-red` are deliberately left
 alone: those are entity state colours, and an active light shouldn't read as

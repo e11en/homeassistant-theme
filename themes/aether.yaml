@@ -1,27 +1,22 @@
 Aether:
-  # Light and dark are deliberately identical: this theme is always dark. The
-  # upstream light mode was a warm grey that turned brown against these cards,
-  # and "Automatic" would flip into it during the day.
+  # Surface
   #
-  # Cards are lighter than the background, not darker. rgba(255,255,255,0.07)
-  # over #0d0f10 lands on ~#1e2021 — the card surface of the luxury_dashboard
-  # theme this is meant to sit next to.
-  modes:
-    light:
-      primary-background-color: "#0d0f10"
-      secondary-background-color: "#0d0f10"
-      app-header-background-color: rgba(13, 15, 16, 0.3)
-      ha-card-background: rgba(255, 255, 255, 0.07)
-      app-theme-color: "#0d0f10" # Used on the top of the browser
-    dark:
-      primary-background-color: "#0d0f10"
-      secondary-background-color: "#0d0f10"
-      app-header-background-color: rgba(13, 15, 16, 0.3)
-      ha-card-background: rgba(255, 255, 255, 0.07)
-      app-theme-color: "#0d0f10"
+  # No `modes:` block on purpose — this theme is always dark, so there is one
+  # set of values instead of a light and a dark variant. Upstream's light mode
+  # was a warm grey that turned brown against these cards, and "Automatic"
+  # would flip into it during the day.
+  #
+  # Everything here is the dark variant except ha-card-background, which is the
+  # light variant's: cards should sit *lighter* than the view, not darker.
+  # rgba(128,128,128,0.3) over #0d0f10 lands on ~#303132.
+  primary-background-color: "#0d0f10"
+  secondary-background-color: "#0d0f10"
+  app-header-background-color: rgba(13, 15, 16, 0.3)
+  ha-card-background: rgba(128, 128, 128, 0.3)
+  app-theme-color: "#0d0f10" # Used on the top of the browser
   # Global
   # No lovelace-background on purpose: the view then falls back to
-  # primary-background-color, a flat colour per mode. See README.
+  # primary-background-color.
   light-primary-color: rgb(241, 241, 241) # Icons on sidebar
   divider-color: rgba(152, 152, 157, 0.3) # from Apple systemGray dark mode
   accent-color: var(--primary-color)
