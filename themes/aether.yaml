@@ -83,6 +83,13 @@ Aether:
   ha-card-border-width: 0 # https://github.com/basnijholt/lovelace-ios-dark-mode-theme/issues/82#event-7732695357
   ha-card-backdrop-filter: none
   ha-card-box-shadow: none
+  # Card titles, in the style of the luxury_dashboard headings. Size, colour and
+  # font go through these variables because ha-card reads them itself, so they
+  # reach every card type. text-transform and letter-spacing have no variable —
+  # those need card-mod, see below.
+  ha-card-header-font-size: 13px
+  ha-card-header-color: var(--secondary-text-color)
+  ha-card-header-font-family: var(--ha-font-family-heading)
   # Toggles
   paper-toggle-button-checked-button-color: "#484848"
   paper-toggle-button-checked-bar-color: "#484848"
@@ -183,35 +190,41 @@ Aether:
       .sidebar-shell {
         background-color: var(--primary-background-color) !important;
       }
-  card-mod-card: |
-    /* Card titles, in the style of the luxury_dashboard headings: small,
-       uppercase, tracked out, grey. Cyan stays reserved for "active". */
-    .card-header {
-      font-family: var(--ha-font-family-heading) !important;
-      font-size: 13px !important;
-      font-weight: 600 !important;
-      letter-spacing: 0.12em !important;
-      text-transform: uppercase !important;
-      color: var(--secondary-text-color) !important;
-      padding: 18px 20px 6px !important;
-    }
+  # The title rules have to go in twice. Entities-style cards keep .card-header
+  # in their own shadow root; glance-style cards keep it one level deeper, in
+  # ha-card's. card-mod only injects into the first, hence the `ha-card$` block.
+  card-mod-card-yaml: |
+    .: |
+      .card-header {
+        font-weight: 600 !important;
+        letter-spacing: 0.12em !important;
+        text-transform: uppercase !important;
+        padding: 18px 20px 6px !important;
+      }
 
-    /* Cards that should not carry a surface of their own */
-    :host(hui-heading-card) ha-card,
-    ha-card.text-only,
-    :host(mushroom-title-card) ha-card,
-    :host(mushroom-chips-card) ha-card {
-      background: none !important;
-      box-shadow: none !important;
-    }
-    ha-card.text-only {
-      overflow: visible;
-    }
+      /* Cards that should not carry a surface of their own */
+      :host(hui-heading-card) ha-card,
+      ha-card.text-only,
+      :host(mushroom-title-card) ha-card,
+      :host(mushroom-chips-card) ha-card {
+        background: none !important;
+        box-shadow: none !important;
+      }
+      ha-card.text-only {
+        overflow: visible;
+      }
 
-    /* Energy dashboard */
-    .mdc-data-table,
-    .mdc-data-table__row,
-    .mdc-data-table__header-cell,
-    ha-sankey-chart {
-      background: none !important;
-    }
+      /* Energy dashboard */
+      .mdc-data-table,
+      .mdc-data-table__row,
+      .mdc-data-table__header-cell,
+      ha-sankey-chart {
+        background: none !important;
+      }
+    ha-card$: |
+      .card-header {
+        font-weight: 600 !important;
+        letter-spacing: 0.12em !important;
+        text-transform: uppercase !important;
+        padding: 18px 20px 6px !important;
+      }
