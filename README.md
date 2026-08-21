@@ -121,6 +121,24 @@ views:
 
 That sets `--view-background`, which takes precedence over the theme.
 
+### What a theme can't reach
+
+Entity rows are ruled and given some vertical padding, but that is where it
+stops. The row internals — the state value, the icon badge — live one shadow
+root deeper, in `hui-generic-entity-row`. card-mod/uix injects into the row
+element (`hui-attribute-row` and friends), not into that nested root, so rules
+aimed at `.text-content.value` or `state-badge` never land. There is no theme
+variable for them either: `state-badge` only defines a background on `:focus`,
+and the value simply inherits its colour.
+
+So a coloured, bold value or an icon in a dark rounded tile is not something a
+theme can do to an entities card. Those looks come from `button-card` and
+friends, which build their own markup and are styled per card in the dashboard
+config.
+
+Note also that a theme cannot tell one entities card from another — anything
+set here applies to all of them.
+
 ## Installation
 
 1. This repository is not in the HACS default list, so add it as a **custom

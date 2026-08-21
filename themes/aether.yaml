@@ -197,22 +197,16 @@ Aether:
       .sidebar-shell {
         background-color: var(--primary-background-color) !important;
       }
-  card-mod-row: |
-    .row .text-content.value {
-      color: var(--primary-color) !important;
-      font-weight: 700 !important;
-    }
-    state-badge {
-      background: #141414 !important;
-      border-radius: 12px !important;
-    }
   card-mod-card: |
-    /* Entity rows: ruled, with room to breathe */
-    #states > div:not(:last-child) {
-      border-bottom: 1px solid var(--divider-color);
-    }
+    /* Entity rows: ruled, with room to breathe.
+       Only reachable from here — the row internals (the value, the icon badge)
+       live one shadow root deeper, in hui-generic-entity-row, where card-mod
+       does not inject. See README. */
     #states > div {
-      padding: 6px 0;
+      padding: 10px 0;
+    }
+    #states > div:not(:last-child) {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     /* Cards that should not carry a surface of their own */
