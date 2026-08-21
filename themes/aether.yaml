@@ -232,6 +232,20 @@ Aether:
       overflow: hidden;
     }
 
+    /* No scrollbar tracks inside cards. Home Assistant puts overflow: auto on
+       card content, so on a system set to always show scrollbars (macOS) a
+       track appears even when there is nothing to scroll — it claimed 17px of
+       card width here. Scrolling itself still works, by wheel or touch. */
+    ha-card::-webkit-scrollbar,
+    .card-content::-webkit-scrollbar {
+      width: 0 !important;
+      height: 0 !important;
+    }
+    ha-card,
+    .card-content {
+      scrollbar-width: none !important;
+    }
+
     /* Cards that should not carry a surface of their own */
     :host(hui-heading-card) ha-card,
     ha-card.text-only,

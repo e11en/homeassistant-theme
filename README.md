@@ -141,6 +141,15 @@ The rule is scoped to the picture card types rather than applied to every
 `ha-card` — a blanket `overflow: hidden` would also clip menus and tooltips that
 are supposed to escape the card.
 
+### No scrollbar tracks inside cards
+
+Home Assistant puts `overflow: auto` on card content, so on a system configured
+to always show scrollbars (macOS) a track appears even when there is nothing to
+scroll — it claimed 17px of card width on a markdown card here. The theme hides
+the track; scrolling still works by wheel or touch.
+
+The trade-off: a card that genuinely overflows no longer advertises it.
+
 ### What a theme can't reach
 
 Entity rows get a little vertical padding, and that is where it stops. The row
