@@ -58,8 +58,13 @@ an opaque card to blur. The `ha-card::before` glass layer upstream uses is
 gone, and with it the transparent-sidebar block — so `uix`/card-mod is now only
 needed for the card rules below.
 
-**Card titles** are restyled to match: 13px, uppercase, tracked out, in
-`secondary-text-color`. Cyan stays reserved for "active".
+**Card titles** are 13px in `secondary-text-color`, set through
+`ha-card-header-font-size` / `-color` / `-font-family`. Those are read by
+`ha-card` itself, which is what makes them apply everywhere: entities-style
+cards keep `.card-header` in their own shadow root, but glance-style cards hand
+the title to `ha-card` and it lands one level deeper, where card-mod does not
+inject. There is no variable for `text-transform` or `letter-spacing`, so the
+titles are not uppercase.
 
 **Poppins** is expected to be loaded document-wide, e.g. via
 `frontend: extra_module_url:` pointing at a small script that injects the
