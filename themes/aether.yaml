@@ -77,7 +77,12 @@ Aether:
   card-background-color: var(--secondary-background-color) # Data table background
   paper-listbox-background-color: var(--primary-background-color)
   ha-card-background: "#1e2022"
-  ha-card-border-radius: 16px
+  # Eigen kopie van de kaartradius. Nodig omdat een panel-view
+  # --ha-card-border-radius op 0 zet (kaarten horen daar schermvullend te zijn);
+  # met layout-card wil je de afronding juist behouden. Deze variabele blijft
+  # staan. Wijzig de radius hier, niet hieronder.
+  aether-card-radius: 16px
+  ha-card-border-radius: var(--aether-card-radius)
   paper-card-background-color: var(--ha-card-background)
   rgb-card-background-color: rgb(30, 32, 34)
   ha-card-border-width: 0 # https://github.com/basnijholt/lovelace-ios-dark-mode-theme/issues/82#event-7732695357
@@ -208,10 +213,14 @@ Aether:
       padding: 10px 0;
     }
 
-    /* Picture cards: the img fills the card square and paints over the rounded
-       corners, because ha-card only rounds itself. Clipping the card is the
-       general fix — it works for any child (img, video, camera stream) and
-       follows --ha-card-border-radius automatically.
+    /* Picture cards need two things the others get for free.
+       1. The img fills the card square and paints over the rounded corners,
+          because ha-card only rounds itself — so clip the card. That works for
+          any child (img, video, camera stream).
+       2. In a panel view Home Assistant sets --ha-card-border-radius to 0, so
+          there is nothing left to clip. Cards carrying their own card_mod with
+          a hardcoded radius escape that; a plain picture card does not. Hence
+          --aether-card-radius, which panel view does not touch.
        Deliberately not applied to every ha-card: overflow: hidden would also
        clip menus and tooltips that are meant to escape the card. */
     :host(hui-picture-card) ha-card,
@@ -219,6 +228,7 @@ Aether:
     :host(hui-picture-glance-card) ha-card,
     :host(hui-picture-elements-card) ha-card,
     :host(hui-image-card) ha-card {
+      border-radius: var(--aether-card-radius) !important;
       overflow: hidden;
     }
 

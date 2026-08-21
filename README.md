@@ -123,14 +123,23 @@ That sets `--view-background`, which takes precedence over the theme.
 
 ### Picture cards keep their corners
 
-`ha-card` rounds itself, but an `img` inside fills the card square and paints
-straight over those corners. The theme clips the card instead of rounding the
-image: that works for any child (img, video, camera stream) and follows
-`--ha-card-border-radius` on its own.
+Two separate problems:
 
-It is scoped to the picture card types rather than applied to every `ha-card` —
-a blanket `overflow: hidden` would also clip menus and tooltips that are
-supposed to escape the card.
+1. `ha-card` rounds itself, but an `img` inside fills the card square and paints
+   straight over those corners. The theme clips the card rather than rounding
+   the image — that works for any child (img, video, camera stream).
+2. **In a panel view, Home Assistant sets `--ha-card-border-radius` to `0`**,
+   because a panel card is meant to fill the screen. Cards that carry their own
+   `card_mod` with a hardcoded radius don't notice; a plain picture card ends up
+   square, and clipping it then achieves nothing.
+
+Hence `--aether-card-radius`, a copy of the radius that panel view does not
+touch. `ha-card-border-radius` derives from it, so there is still one place to
+change the value.
+
+The rule is scoped to the picture card types rather than applied to every
+`ha-card` — a blanket `overflow: hidden` would also clip menus and tooltips that
+are supposed to escape the card.
 
 ### What a theme can't reach
 
