@@ -121,6 +121,17 @@ views:
 
 That sets `--view-background`, which takes precedence over the theme.
 
+### Picture cards keep their corners
+
+`ha-card` rounds itself, but an `img` inside fills the card square and paints
+straight over those corners. The theme clips the card instead of rounding the
+image: that works for any child (img, video, camera stream) and follows
+`--ha-card-border-radius` on its own.
+
+It is scoped to the picture card types rather than applied to every `ha-card` —
+a blanket `overflow: hidden` would also clip menus and tooltips that are
+supposed to escape the card.
+
 ### What a theme can't reach
 
 Entity rows get a little vertical padding, and that is where it stops. The row

@@ -208,6 +208,20 @@ Aether:
       padding: 10px 0;
     }
 
+    /* Picture cards: the img fills the card square and paints over the rounded
+       corners, because ha-card only rounds itself. Clipping the card is the
+       general fix — it works for any child (img, video, camera stream) and
+       follows --ha-card-border-radius automatically.
+       Deliberately not applied to every ha-card: overflow: hidden would also
+       clip menus and tooltips that are meant to escape the card. */
+    :host(hui-picture-card) ha-card,
+    :host(hui-picture-entity-card) ha-card,
+    :host(hui-picture-glance-card) ha-card,
+    :host(hui-picture-elements-card) ha-card,
+    :host(hui-image-card) ha-card {
+      overflow: hidden;
+    }
+
     /* Cards that should not carry a surface of their own */
     :host(hui-heading-card) ha-card,
     ha-card.text-only,
