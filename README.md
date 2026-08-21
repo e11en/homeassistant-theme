@@ -67,6 +67,11 @@ stylesheet. An `@import` inside the theme is *not* enough — theme CSS lands in
 a shadow root, where `@font-face` is ignored. Without that script the font
 variables simply fall back to sans-serif.
 
+Note the theme sets `ha-font-family-body` / `-heading` / `-longform`. Those are
+the variables current Home Assistant reads; `primary-font-family` and the
+`paper-font-*` set no longer appear anywhere in the frontend bundle. They are
+kept only because custom cards still read them.
+
 `orange-color`, `yellow-color` and `label-badge-red` are deliberately left
 alone: those are entity state colours, and an active light shouldn't read as
 "accent". Note `label-badge-red` is orange despite its name.

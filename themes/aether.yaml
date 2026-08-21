@@ -19,12 +19,18 @@ Aether:
   light-primary-color: rgb(241, 241, 241) # Icons on sidebar
   divider-color: rgba(255, 255, 255, 0.07)
   accent-color: var(--primary-color)
-  # Font — Poppins is loaded document-wide by /local/luxury-font.js, wired up
-  # through `frontend: extra_module_url:`. An @import here is not enough: it
+  # Font — Poppins has to be loaded document-wide (see README); an @import here
   # lands in a shadow root, where @font-face is ignored.
+  #
+  # ha-font-family-* are the ones the frontend actually reads. primary-font-family
+  # and the paper-font-* set are dead as far as core HA goes — grep the bundle
+  # and there is not a single var(--primary-font-family) left — but custom cards
+  # still pick them up, so they stay.
+  ha-font-family-body: "'Poppins', sans-serif"
+  ha-font-family-heading: "'Poppins', sans-serif"
+  ha-font-family-longform: "'Poppins', sans-serif"
   primary-font-family: "'Poppins', sans-serif"
   paper-font-common-base_-_font-family: "'Poppins', sans-serif"
-  paper-font-common-code_-_font-family: "'Poppins', sans-serif"
   paper-font-body1_-_font-family: "'Poppins', sans-serif"
   paper-font-subhead_-_font-family: "'Poppins', sans-serif"
   paper-font-headline_-_font-family: "'Poppins', sans-serif"
@@ -181,7 +187,7 @@ Aether:
     /* Card titles, in the style of the luxury_dashboard headings: small,
        uppercase, tracked out, grey. Cyan stays reserved for "active". */
     .card-header {
-      font-family: var(--primary-font-family) !important;
+      font-family: var(--ha-font-family-heading) !important;
       font-size: 13px !important;
       font-weight: 600 !important;
       letter-spacing: 0.12em !important;
