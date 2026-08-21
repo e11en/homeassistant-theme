@@ -123,8 +123,8 @@ That sets `--view-background`, which takes precedence over the theme.
 
 ### What a theme can't reach
 
-Entity rows are ruled and given some vertical padding, but that is where it
-stops. The row internals — the state value, the icon badge — live one shadow
+Entity rows get a little vertical padding, and that is where it stops. The row
+internals — the state value, the icon badge — live one shadow
 root deeper, in `hui-generic-entity-row`. card-mod/uix injects into the row
 element (`hui-attribute-row` and friends), not into that nested root, so rules
 aimed at `.text-content.value` or `state-badge` never land. There is no theme

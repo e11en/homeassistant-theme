@@ -198,15 +198,14 @@ Aether:
         background-color: var(--primary-background-color) !important;
       }
   card-mod-card: |
-    /* Entity rows: ruled, with room to breathe.
-       Only reachable from here — the row internals (the value, the icon badge)
-       live one shadow root deeper, in hui-generic-entity-row, where card-mod
-       does not inject. See README. */
+    /* Entity rows: some room to breathe. No divider — a theme cannot tell one
+       entities card from another, and a rule that suits a list of readings is
+       wrong on a list of statuses. That belongs in per-card CSS.
+       The row internals (the value, the icon badge) are out of reach from here
+       anyway: they live one shadow root deeper, in hui-generic-entity-row,
+       where card-mod does not inject. See README. */
     #states > div {
       padding: 10px 0;
-    }
-    #states > div:not(:last-child) {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     /* Cards that should not carry a surface of their own */
